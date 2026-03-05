@@ -3,6 +3,7 @@ package com.lan.app.application.idmapping;
 public enum EntityType {
     REGISTRATION,
     EVENT,
-    GUEST,
+    EVENT_GUEST,
     NOTIFICATION,
+    COWORKING_GUEST
 }

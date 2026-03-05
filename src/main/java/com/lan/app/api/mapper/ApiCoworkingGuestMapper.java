@@ -1,0 +1,29 @@
+package com.lan.app.api.mapper;
+
+import com.lan.app.api.dto.CoworkingGuestResponse;
+import com.lan.app.api.dto.UpdateCoworkingGuestRequest;
+import com.lan.app.domain.CoworkingGuest;
+import com.lan.app.service.command.UpdateCoworkingGuestCommand;
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+public class ApiCoworkingGuestMapper {
+    public CoworkingGuestResponse toResponse(CoworkingGuest r) {
+        return new CoworkingGuestResponse(
+            r.externalId(),
+            r.firstName(),
+            r.lastName(),
+            r.telegram(),
+            r.phone()
+        );
+    }
+
+    public UpdateCoworkingGuestCommand toCommand(UpdateCoworkingGuestRequest req) {
+        return new UpdateCoworkingGuestCommand(
+            req.firstName(),
+            req.lastName(),
+            req.phone(),
+            req.telegram()
+        );
+    }
+}

@@ -1,4 +1,4 @@
-package com.lan.app.domain;
+    package com.lan.app.domain;
 
 public enum EventClient {
     LAN_SITE,

@@ -5,12 +5,10 @@ import com.lan.app.application.idmapping.EntityType;
 import com.lan.app.application.idmapping.ExternalIdResolver;
 import com.lan.app.application.idmapping.InternalIdResolver;
 import com.lan.app.domain.exception.CorruptedDataException;
-import com.lan.app.infrastructure.baserow.client.BaserowEventApi;
-import com.lan.app.infrastructure.baserow.client.BaserowGuestApi;
-import com.lan.app.infrastructure.baserow.client.BaserowNotificationApi;
-import com.lan.app.infrastructure.baserow.client.BaserowRegistrationApi;
+import com.lan.app.infrastructure.baserow.client.*;
+import com.lan.app.infrastructure.baserow.dto.BaserowCoworkingGuestRow;
 import com.lan.app.infrastructure.baserow.dto.BaserowEventRow;
-import com.lan.app.infrastructure.baserow.dto.BaserowGuestRow;
+import com.lan.app.infrastructure.baserow.dto.BaserowEventGuestRow;
 import com.lan.app.infrastructure.baserow.dto.BaserowRegistrationRow;
 import jakarta.ws.rs.NotFoundException;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -22,33 +20,39 @@ import java.util.UUID;
 @ApplicationScoped
 public class BaserowIdResolver implements ExternalIdResolver, InternalIdResolver {
 
-    private final BaserowEventApi eventApi;
-    private final BaserowGuestApi guestApi;
-    private final BaserowRegistrationApi registrationApi;
-    private final BaserowNotificationApi notificationApi;
+    private final _BaserowEventApi eventApi;
+    private final _BaserowEventGuestApi guestApi;
+    private final _BaserowEventRegistrationApi registrationApi;
+    private final _BaserowEventNotificationApi notificationApi;
+    private final _BaserowCoworkingGuestApi coworkingGuestApi;
 
-    @ConfigProperty(name = "baserow.events-table-id")
+    @ConfigProperty(name = "baserow.events.events-table-id")
     int eventsTableId;
 
-    @ConfigProperty(name = "baserow.guests-table-id")
+    @ConfigProperty(name = "baserow.events.guests-table-id")
     int guestsTableId;
 
-    @ConfigProperty(name = "baserow.registrations-table-id")
+    @ConfigProperty(name = "baserow.events.registrations-table-id")
     int registrationsTableId;
 
-    @ConfigProperty(name = "baserow.notifications-table-id")
+    @ConfigProperty(name = "baserow.events.notifications-table-id")
     int notificationsTableId;
 
+    @ConfigProperty(name = "baserow.coworking.guests-table-id")
+    int coworkingGuestsTableId;
+
     public BaserowIdResolver(
-        @RestClient BaserowEventApi eventApi,
-        @RestClient BaserowGuestApi guestApi,
-        @RestClient BaserowRegistrationApi registrationApi,
-        @RestClient BaserowNotificationApi notificationApi
+        @RestClient _BaserowEventApi eventApi,
+        @RestClient _BaserowEventGuestApi guestApi,
+        @RestClient _BaserowEventRegistrationApi registrationApi,
+        @RestClient _BaserowEventNotificationApi notificationApi,
+        @RestClient _BaserowCoworkingGuestApi coworkingGuestApi
     ) {
         this.eventApi = eventApi;
         this.guestApi = guestApi;
         this.registrationApi = registrationApi;
         this.notificationApi = notificationApi;
+        this.coworkingGuestApi = coworkingGuestApi;
     }
 
     @Override
@@ -59,7 +63,7 @@ public class BaserowIdResolver implements ExternalIdResolver, InternalIdResolver
                 type,
                 internalId
             );
-            case GUEST -> requireExternalId(
+            case EVENT_GUEST -> requireExternalId(
                 guestApi.getByRowId(guestsTableId, internalId, true),
                 type,
                 internalId
@@ -71,6 +75,11 @@ public class BaserowIdResolver implements ExternalIdResolver, InternalIdResolver
             );
             case NOTIFICATION -> requireExternalId(
                 notificationApi.getByRowId(notificationsTableId, internalId, true),
+                type,
+                internalId
+            );
+            case COWORKING_GUEST -> requireExternalId(
+                coworkingGuestApi.getByRowId(coworkingGuestsTableId, internalId, true),
                 type,
                 internalId
             );
@@ -89,7 +98,7 @@ public class BaserowIdResolver implements ExternalIdResolver, InternalIdResolver
                 eventApi.list(eventsTableId, true).results(),
                 ext
             );
-            case EntityType.GUEST -> singleInternalId(
+            case EntityType.EVENT_GUEST -> singleInternalId(
                 type,
                 guestApi.list(guestsTableId, true).results(),
                 ext
@@ -104,15 +113,19 @@ public class BaserowIdResolver implements ExternalIdResolver, InternalIdResolver
                 notificationApi.list(notificationsTableId, true).results(),
                 ext
             );
+            case EntityType.COWORKING_GUEST -> singleInternalId(
+                type,
+                coworkingGuestApi.list(coworkingGuestsTableId, true).results(),
+                ext
+            );
         };
     }
 
     private String requireExternalId(Object row, EntityType type, int internalId) {
-        if (row instanceof BaserowEventRow r) {
-            return r.externalId().toString();
-        }
-        if (row instanceof BaserowGuestRow r) return r.externalId().toString();
+        if (row instanceof BaserowEventRow r) return r.externalId().toString();
+        if (row instanceof BaserowEventGuestRow r) return r.externalId().toString();
         if (row instanceof BaserowRegistrationRow r) return r.externalId().toString();
+        if (row instanceof BaserowCoworkingGuestRow r) return r.externalId().toString();
         throw new CorruptedDataException("Unknown row DTO for " + type + " internalId=" + internalId);
     }
 
@@ -126,8 +139,9 @@ public class BaserowIdResolver implements ExternalIdResolver, InternalIdResolver
 
         Object row = results.getFirst();
         if (row instanceof BaserowEventRow r) return r.id();
-        if (row instanceof BaserowGuestRow r) return r.id();
+        if (row instanceof BaserowEventGuestRow r) return r.id();
         if (row instanceof BaserowRegistrationRow r) return r.id();
+        if (row instanceof BaserowCoworkingGuestRow r) return r.id();
 
         throw new CorruptedDataException("Unknown row DTO in list results for " + type);
     }
