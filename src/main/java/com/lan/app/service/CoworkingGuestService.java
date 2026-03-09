@@ -4,7 +4,6 @@ import com.lan.app.domain.CoworkingGuest;
 import com.lan.app.repository.CoworkingGuestRepository;
 import com.lan.app.service.command.UpdateCoworkingGuestCommand;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.util.UUID;
 

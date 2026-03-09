@@ -25,7 +25,7 @@ dependencies {
     implementation("io.quarkus:quarkus-arc")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.rest-assured:rest-assured")
-    testImplementation("org.mockito:mockito-core:2.1.0")
+    testImplementation("org.mockito:mockito-junit-jupiter")
     implementation("io.quarkus:quarkus-hibernate-validator")
     implementation("io.quarkus:quarkus-cache")
 }

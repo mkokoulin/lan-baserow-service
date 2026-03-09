@@ -1,4 +1,4 @@
-package com.lan.app.api.dto;
+package com.lan.app.api.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Min;

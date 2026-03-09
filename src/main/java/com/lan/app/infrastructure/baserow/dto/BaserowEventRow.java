@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public record BaserowEventRow(
     @NotNull @JsonProperty("id") Integer id,
-    @NotNull @NotBlank @JsonProperty("external_id") UUID externalId,
+    @NotNull @JsonProperty("external_id") UUID externalId,
     @NotNull @NotBlank @JsonProperty("name") String name,
     @NotNull @NotBlank @JsonProperty("date_start") String dateStart,
     @NotNull @NotBlank @JsonProperty("date_end") String dateEnd,

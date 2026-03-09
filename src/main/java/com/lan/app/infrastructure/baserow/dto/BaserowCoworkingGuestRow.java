@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public record BaserowCoworkingGuestRow(
     @NotNull @JsonProperty("id") Integer id,
-    @NotNull @NotBlank @JsonProperty("external_id") UUID externalId,
+    @NotNull @JsonProperty("external_id") UUID externalId,
     @NotNull @NotBlank @JsonProperty("first_name") String firstName,
     @NotNull @NotBlank @JsonProperty("last_name") String lastName,
     @NotNull @NotBlank @JsonProperty("phone") String phone,

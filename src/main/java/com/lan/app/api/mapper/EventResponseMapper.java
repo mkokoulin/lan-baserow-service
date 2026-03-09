@@ -1,6 +1,6 @@
 package com.lan.app.api.mapper;
 
-import com.lan.app.api.dto.EventResponse;
+import com.lan.app.api.dto.response.EventResponse;
 import com.lan.app.domain.Event;
 import jakarta.enterprise.context.ApplicationScoped;
 

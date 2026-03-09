@@ -1,13 +1,14 @@
 package com.lan.app.api.mapper;
 
-import com.lan.app.api.dto.CoworkingGuestResponse;
-import com.lan.app.api.dto.UpdateCoworkingGuestRequest;
+import com.lan.app.api.dto.response.CoworkingGuestResponse;
+import com.lan.app.api.dto.request.UpdateCoworkingGuestRequest;
 import com.lan.app.domain.CoworkingGuest;
 import com.lan.app.service.command.UpdateCoworkingGuestCommand;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class ApiCoworkingGuestMapper {
+
     public CoworkingGuestResponse toResponse(CoworkingGuest r) {
         return new CoworkingGuestResponse(
             r.externalId(),

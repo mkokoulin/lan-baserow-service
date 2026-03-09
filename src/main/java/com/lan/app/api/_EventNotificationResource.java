@@ -1,6 +1,6 @@
 package com.lan.app.api;
 
-import com.lan.app.api.dto.EventNotificationResponse;
+import com.lan.app.api.dto.response.EventNotificationResponse;
 import com.lan.app.api.mapper.EventNotificationMapper;
 import com.lan.app.service._EventNotificationService;
 import jakarta.ws.rs.*;

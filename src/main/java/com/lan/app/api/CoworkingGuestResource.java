@@ -1,14 +1,16 @@
 package com.lan.app.api;
 
-import com.lan.app.api.dto.CoworkingGuestResponse;
-import com.lan.app.api.dto.CreateCoworkingGuestRequest;
-import com.lan.app.api.dto.UpdateCoworkingGuestRequest;
+import com.lan.app.api.dto.response.CoworkingGuestResponse;
+import com.lan.app.api.dto.request.CreateCoworkingGuestRequest;
+import com.lan.app.api.dto.request.UpdateCoworkingGuestRequest;
 import com.lan.app.api.mapper.ApiCoworkingGuestMapper;
 import com.lan.app.service.CoworkingGuestService;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
+import java.net.URI;
 import java.util.UUID;
 
 @Path("/coworking/guests")
@@ -34,12 +36,14 @@ public class CoworkingGuestResource {
     }
 
     @POST
-    public CoworkingGuestResponse create(@Valid CreateCoworkingGuestRequest req) {
+    public Response create(@Valid CreateCoworkingGuestRequest req) {
         var created = service.create(req.firstName(), req.lastName(), req.phone(), req.telegram());
-        return mapper.toResponse(created);
+        return Response.created(URI.create("/coworking/guests/" + created.externalId()))
+            .entity(mapper.toResponse(created))
+            .build();
     }
 
-    @PUT
+    @PATCH
     @Path("/{externalId}")
     public CoworkingGuestResponse update(
         @PathParam("externalId") UUID externalId,

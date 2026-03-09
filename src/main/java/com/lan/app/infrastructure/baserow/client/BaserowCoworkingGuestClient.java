@@ -1,15 +1,11 @@
 package com.lan.app.infrastructure.baserow.client;
 
-import com.lan.app.infrastructure.baserow.dto.BaserowCoworkingGuestRow;
-import com.lan.app.infrastructure.baserow.dto.BaserowListResponse;
-import com.lan.app.infrastructure.baserow.dto.CreateCoworkingGuestRowRequest;
-import com.lan.app.infrastructure.baserow.dto.UpdateCoworkingGuestRowRequest;
+import com.lan.app.infrastructure.baserow.dto.*;
 import io.quarkus.rest.client.reactive.ClientQueryParam;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;
 import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -20,15 +16,14 @@ import java.util.UUID;
 @Path("/api/database/rows/table")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-@ClientHeaderParam(name = "Authorization", value = "Token ${baserow.token}")
 public interface BaserowCoworkingGuestClient {
 
-    @POST
+    @GET
+    @Path("/{tableId}/{rowId}/")
     @ClientQueryParam(name = "user_field_names", value = "true")
-    @Path("/{tableId}/")
-    BaserowCoworkingGuestRow create(
+    BaserowCoworkingGuestRow getByRowId(
         @PathParam("tableId") int tableId,
-        @NotNull @Valid CreateCoworkingGuestRowRequest body
+        @PathParam("rowId") int rowId
     );
 
     @GET
@@ -51,6 +46,14 @@ public interface BaserowCoworkingGuestClient {
         }
         return resp.results().getFirst();
     }
+
+    @POST
+    @ClientQueryParam(name = "user_field_names", value = "true")
+    @Path("/{tableId}/")
+    BaserowCoworkingGuestRow create(
+        @PathParam("tableId") int tableId,
+        @NotNull @Valid CreateCoworkingGuestRowRequest body
+    );
 
     @PATCH
     @ClientQueryParam(name = "user_field_names", value = "true")
