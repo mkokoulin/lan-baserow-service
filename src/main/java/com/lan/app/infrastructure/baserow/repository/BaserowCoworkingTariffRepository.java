@@ -1,6 +1,6 @@
 package com.lan.app.infrastructure.baserow.repository;
 
-import com.lan.app.domain.CoworkingTariff;
+import com.lan.app.domain.model.CoworkingTariff;
 import com.lan.app.infrastructure.baserow.client.BaserowCoworkingTariffClient;
 import com.lan.app.infrastructure.baserow.mapper.BaserowCoworkingTariffMapper;
 import com.lan.app.repository.CoworkingTariffRepository;

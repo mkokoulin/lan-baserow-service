@@ -2,6 +2,8 @@ package com.lan.app.infrastructure.baserow.client;
 
 import com.lan.app.infrastructure.baserow.dto.BaserowCoworkingActiveTariffRow;
 import com.lan.app.infrastructure.baserow.dto.BaserowListResponse;
+import com.lan.app.infrastructure.baserow.exception.BaserowDataIntegrityException;
+import com.lan.app.infrastructure.baserow.exception.BaserowNotFoundException;
 import io.quarkus.rest.client.reactive.ClientQueryParam;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -46,9 +48,15 @@ public interface BaserowCoworkingActiveTariffClient {
         var resp = findAllByExternalId(tableId, externalId);
 
         if (resp.count() == 0 || resp.results().isEmpty()) {
-            throw new NotFoundException("Not found: " + externalId);
+            throw new BaserowNotFoundException("Coworking active tariff", externalId);
         }
 
-        return resp.results().getFirst();
+        var row = resp.results().getFirst();
+
+        if (row.tariffId().isEmpty() || row.guestId().isEmpty()) {
+            throw new BaserowDataIntegrityException("Coworking active tariff", externalId);
+        }
+
+        return row;
     }
 }

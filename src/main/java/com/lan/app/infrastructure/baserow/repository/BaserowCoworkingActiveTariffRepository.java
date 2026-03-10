@@ -1,17 +1,21 @@
 package com.lan.app.infrastructure.baserow.repository;
 
-import com.lan.app.domain.CoworkingActiveTariff;
-import com.lan.app.domain.CoworkingActiveTariffListItem;
+import com.lan.app.domain.model.CoworkingActiveTariff;
+import com.lan.app.domain.model.CoworkingActiveTariffListItem;
 import com.lan.app.infrastructure.baserow.client.BaserowCoworkingActiveTariffClient;
 import com.lan.app.infrastructure.baserow.client.BaserowCoworkingGuestClient;
 import com.lan.app.infrastructure.baserow.client.BaserowCoworkingTariffClient;
 import com.lan.app.infrastructure.baserow.dto.BaserowCoworkingActiveTariffRow;
+import com.lan.app.infrastructure.baserow.exception.BaserowNotFoundException;
+import com.lan.app.infrastructure.baserow.exception.BaserowUnavailableException;
 import com.lan.app.infrastructure.baserow.mapper.BaserowCoworkingActiveTariffMapper;
 import com.lan.app.repository.CoworkingActiveTariffRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.WebApplicationException;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,11 +55,26 @@ public class BaserowCoworkingActiveTariffRepository implements CoworkingActiveTa
     }
 
     public CoworkingActiveTariff get(UUID externalId) {
-        var row = activeTariffClient.findUniqueByExternalId(coworkingActiveTariffsTableId, externalId);
-        return mapper.toDomain(
-            row,
-            resolveGuestExternalId(row),
-            resolveTariffExternalId(row));
+        try {
+            var row = activeTariffClient.findUniqueByExternalId(coworkingActiveTariffsTableId, externalId);
+
+            return mapper.toDomain(
+                row,
+                resolveGuestExternalId(row),
+                resolveTariffExternalId(row));
+        } catch (BaserowNotFoundException e) {
+            throw e;
+        } catch (WebApplicationException e) {
+            if (e.getResponse() != null && e.getResponse().getStatus() == 404) {
+                throw new BaserowNotFoundException("Coworking active tariff", externalId);
+            }
+            throw new BaserowUnavailableException("Baserow request failed.", e);
+        } catch (Exception e) {
+            if (hasTimeoutCause(e)) {
+                throw new BaserowUnavailableException("Baserow is unavailable.", e);
+            }
+            throw e;
+        }
     }
 
     private UUID resolveGuestExternalId(BaserowCoworkingActiveTariffRow row) {
@@ -72,6 +91,16 @@ public class BaserowCoworkingActiveTariffRepository implements CoworkingActiveTa
             .orElseThrow(() -> new IllegalStateException("Active tariff tariff link is missing"))
             .id();
         return tariffClient.getByRowId(coworkingTariffsTableId, tariffRowId).externalId();
+    }
+
+    private boolean hasTimeoutCause(Throwable throwable) {
+        while (throwable != null) {
+            if (throwable instanceof SocketTimeoutException) {
+                return true;
+            }
+            throwable = throwable.getCause();
+        }
+        return false;
     }
 }
 

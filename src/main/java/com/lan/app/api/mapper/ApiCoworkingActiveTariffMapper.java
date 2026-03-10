@@ -2,8 +2,8 @@ package com.lan.app.api.mapper;
 
 import com.lan.app.api.dto.response.CoworkingActiveTariffListItemResponse;
 import com.lan.app.api.dto.response.CoworkingActiveTariffResponse;
-import com.lan.app.domain.CoworkingActiveTariff;
-import com.lan.app.domain.CoworkingActiveTariffListItem;
+import com.lan.app.domain.model.CoworkingActiveTariff;
+import com.lan.app.domain.model.CoworkingActiveTariffListItem;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped

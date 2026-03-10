@@ -1,6 +1,6 @@
 package com.lan.app.infrastructure.baserow.repository;
 
-import com.lan.app.domain.CoworkingGuest;
+import com.lan.app.domain.model.CoworkingGuest;
 import com.lan.app.infrastructure.baserow.client.BaserowCoworkingGuestClient;
 import com.lan.app.infrastructure.baserow.dto.CreateCoworkingGuestRowRequest;
 import com.lan.app.infrastructure.baserow.mapper.BaserowCoworkingGuestMapper;

@@ -1,6 +1,6 @@
 package com.lan.app.infrastructure.baserow.mapper;
 
-import com.lan.app.domain.CoworkingGuest;
+import com.lan.app.domain.model.CoworkingGuest;
 import com.lan.app.infrastructure.baserow.dto.BaserowCoworkingGuestRow;
 import com.lan.app.infrastructure.baserow.dto.UpdateCoworkingGuestRowRequest;
 import com.lan.app.service.command.UpdateCoworkingGuestCommand;

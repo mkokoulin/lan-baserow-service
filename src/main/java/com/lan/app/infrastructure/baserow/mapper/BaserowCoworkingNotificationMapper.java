@@ -1,6 +1,6 @@
 package com.lan.app.infrastructure.baserow.mapper;
 
-import com.lan.app.domain.CoworkingNotification;
+import com.lan.app.domain.model.CoworkingNotification;
 import com.lan.app.infrastructure.baserow.dto.BaserowCoworkingNotificationRow;
 import jakarta.enterprise.context.ApplicationScoped;
 

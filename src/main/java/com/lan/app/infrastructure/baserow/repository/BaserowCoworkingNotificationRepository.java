@@ -1,6 +1,6 @@
 package com.lan.app.infrastructure.baserow.repository;
 
-import com.lan.app.domain.CoworkingNotification;
+import com.lan.app.domain.model.CoworkingNotification;
 import com.lan.app.infrastructure.baserow.client.BaserowCoworkingNotificationClient;
 import com.lan.app.infrastructure.baserow.mapper.BaserowCoworkingNotificationMapper;
 import com.lan.app.repository.CoworkingNotificationRepository;

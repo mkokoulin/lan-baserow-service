@@ -1,7 +1,7 @@
 package com.lan.app.infrastructure.baserow.mapper;
 
-import com.lan.app.domain.CoworkingActiveTariff;
-import com.lan.app.domain.CoworkingActiveTariffListItem;
+import com.lan.app.domain.model.CoworkingActiveTariff;
+import com.lan.app.domain.model.CoworkingActiveTariffListItem;
 import com.lan.app.infrastructure.baserow.dto.BaserowCoworkingActiveTariffRow;
 import jakarta.enterprise.context.ApplicationScoped;
 

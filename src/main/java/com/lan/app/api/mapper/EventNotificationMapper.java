@@ -1,7 +1,7 @@
 package com.lan.app.api.mapper;
 
 import com.lan.app.api.dto.response.EventNotificationResponse;
-import com.lan.app.domain.EventNotification;
+import com.lan.app.domain.model.EventNotification;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped

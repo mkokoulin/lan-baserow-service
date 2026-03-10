@@ -2,7 +2,7 @@ package com.lan.app.api.mapper;
 
 import com.lan.app.api.dto.request.EventRegistrationCreateRequest;
 import com.lan.app.api.dto.response.EventRegistrationResponse;
-import com.lan.app.domain.EventRegistration;
+import com.lan.app.domain.model.EventRegistration;
 import com.lan.app.service.command.CreateEventRegistrationCommand;
 import jakarta.enterprise.context.ApplicationScoped;
 

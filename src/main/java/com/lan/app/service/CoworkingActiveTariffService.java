@@ -1,7 +1,7 @@
 package com.lan.app.service;
 
-import com.lan.app.domain.CoworkingActiveTariff;
-import com.lan.app.domain.CoworkingActiveTariffListItem;
+import com.lan.app.domain.model.CoworkingActiveTariff;
+import com.lan.app.domain.model.CoworkingActiveTariffListItem;
 import com.lan.app.repository.CoworkingActiveTariffRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

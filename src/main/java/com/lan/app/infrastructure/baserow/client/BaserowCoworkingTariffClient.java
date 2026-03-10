@@ -1,8 +1,14 @@
 package com.lan.app.infrastructure.baserow.client;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.lan.app.domain.exception.InvalidBaserowRowException;
 import com.lan.app.infrastructure.baserow.dto.BaserowCoworkingTariffRow;
 import com.lan.app.infrastructure.baserow.dto.BaserowListResponse;
+import com.lan.app.infrastructure.baserow.dto.BaserowSingleSelect;
 import io.quarkus.rest.client.reactive.ClientQueryParam;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.annotation.RegisterClientHeaders;
@@ -46,7 +52,7 @@ public interface BaserowCoworkingTariffClient {
         var resp = findAllByExternalId(tableId, externalId);
 
         if (resp.count() == 0 || resp.results().isEmpty()) {
-            throw new NotFoundException("Not found: " + externalId);
+            throw new NotFoundException("Tariff not found: " + externalId);
         }
 
         return resp.results().getFirst();

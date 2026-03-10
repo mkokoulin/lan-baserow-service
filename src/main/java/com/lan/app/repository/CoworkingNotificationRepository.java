@@ -1,6 +1,6 @@
 package com.lan.app.repository;
 
-import com.lan.app.domain.CoworkingNotification;
+import com.lan.app.domain.model.CoworkingNotification;
 
 import java.util.List;
 

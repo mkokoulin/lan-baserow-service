@@ -1,6 +1,6 @@
 package com.lan.app.service;
 
-import com.lan.app.domain.CoworkingNotification;
+import com.lan.app.domain.model.CoworkingNotification;
 import com.lan.app.repository.CoworkingNotificationRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

@@ -1,6 +1,6 @@
 package com.lan.app.repository;
 
-import com.lan.app.domain.CoworkingGuest;
+import com.lan.app.domain.model.CoworkingGuest;
 import com.lan.app.service.command.UpdateCoworkingGuestCommand;
 
 import java.util.UUID;

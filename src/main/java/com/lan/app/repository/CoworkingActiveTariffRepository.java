@@ -1,7 +1,7 @@
 package com.lan.app.repository;
 
-import com.lan.app.domain.CoworkingActiveTariff;
-import com.lan.app.domain.CoworkingActiveTariffListItem;
+import com.lan.app.domain.model.CoworkingActiveTariff;
+import com.lan.app.domain.model.CoworkingActiveTariffListItem;
 
 import java.util.List;
 import java.util.UUID;

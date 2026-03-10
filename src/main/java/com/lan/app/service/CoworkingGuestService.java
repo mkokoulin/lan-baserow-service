@@ -1,6 +1,6 @@
 package com.lan.app.service;
 
-import com.lan.app.domain.CoworkingGuest;
+import com.lan.app.domain.model.CoworkingGuest;
 import com.lan.app.repository.CoworkingGuestRepository;
 import com.lan.app.service.command.UpdateCoworkingGuestCommand;
 import jakarta.enterprise.context.ApplicationScoped;
