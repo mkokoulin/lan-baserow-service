@@ -22,6 +22,7 @@ public interface BaserowCoworkingActiveTariffClient {
     @GET
     @Path("/{tableId}/")
     @ClientQueryParam(name = "user_field_names", value = "true")
+    @ClientQueryParam(name = "filter__active__equal", value = "true")
     BaserowListResponse<BaserowCoworkingActiveTariffRow> list(
         @PathParam("tableId") int tableId
     );
@@ -30,6 +31,7 @@ public interface BaserowCoworkingActiveTariffClient {
     @Path("/{tableId}/{rowId}/")
     @ClientQueryParam(name = "size", value = "1")
     @ClientQueryParam(name = "user_field_names", value = "true")
+    @ClientQueryParam(name = "filter__active__equal", value = "true")
     BaserowListResponse<BaserowCoworkingActiveTariffRow> getByRowId(
         @PathParam("tableId") int tableId,
         @PathParam("rowId") int rowId
@@ -39,6 +41,7 @@ public interface BaserowCoworkingActiveTariffClient {
     @Path("/{tableId}/")
     @ClientQueryParam(name = "size", value = "1")
     @ClientQueryParam(name = "user_field_names", value = "true")
+    @ClientQueryParam(name = "filter__active__equal", value = "true")
     BaserowListResponse<BaserowCoworkingActiveTariffRow> findAllByExternalId(
         @PathParam("tableId") int tableId,
         @QueryParam("filter__field_externalId__equal") UUID externalId

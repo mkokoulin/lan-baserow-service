@@ -1,9 +1,7 @@
 package com.lan.app.infrastructure.baserow.client;
 
-import com.lan.app.infrastructure.baserow.dto.BaserowEventRow;
 import com.lan.app.infrastructure.baserow.dto.BaserowListResponse;
 import com.lan.app.infrastructure.baserow.dto.BaserowRegistrationRow;
-import jakarta.enterprise.inject.Default;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.annotation.ClientHeaderParam;

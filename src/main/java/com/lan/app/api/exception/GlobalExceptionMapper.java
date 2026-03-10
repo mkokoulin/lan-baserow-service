@@ -47,7 +47,7 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
         }
 
         if (exception instanceof BaserowDataIntegrityException e) {
-//            LOG.error("Baserow returned incomplete data", exception);
+            LOG.error("Baserow returned incomplete data", exception);
 
             return buildResponse(
                 Response.Status.BAD_GATEWAY,

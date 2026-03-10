@@ -1,6 +1,8 @@
 package com.lan.app.infrastructure.baserow.client;
 
 import com.lan.app.infrastructure.baserow.dto.*;
+import com.lan.app.infrastructure.baserow.exception.BaserowDataIntegrityException;
+import com.lan.app.infrastructure.baserow.exception.BaserowNotFoundException;
 import io.quarkus.rest.client.reactive.ClientQueryParam;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -39,11 +41,13 @@ public interface BaserowCoworkingGuestClient {
         var resp = findByExternalIdRaw(tableId, externalId);
 
         if (resp.count() == 0 || resp.results().isEmpty()) {
-            throw new NotFoundException("Not found: " + externalId);
+            throw new BaserowNotFoundException("Coworking guest", externalId);
         }
+
         if (resp.results().size() > 1) {
-            throw new IllegalStateException("externalId is not unique: " + externalId);
+            throw new BaserowDataIntegrityException("Coworking guest", externalId);
         }
+
         return resp.results().getFirst();
     }
 
